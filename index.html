@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>IRON GYM - Đăng nhập</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+
+<body class="login-page">
+
+    <!-- Background -->
+    <div class="background-effects">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+        <div class="grid-background"></div>
+    </div>
+
+    <main class="login-container">
+
+        <!-- Logo -->
+        <div class="brand">
+            <div class="brand-icon">⚡</div>
+
+            <div>
+                <h1>IRON<span>GYM</span></h1>
+                <p>MEMBER SYSTEM</p>
+            </div>
+        </div>
+
+        <!-- Login card -->
+        <div class="login-card">
+
+            <div class="login-header">
+                <span class="small-label">WELCOME BACK</span>
+
+                <h2>Chào mừng<br>quay trở lại 👋</h2>
+
+                <p>
+                    Đăng nhập để bắt đầu buổi tập của bạn.
+                </p>
+            </div>
+
+            <form id="loginForm">
+
+                <div class="input-group">
+                    <label for="fullName">Họ và tên</label>
+
+                    <div class="input-box">
+                        <span>👤</span>
+
+                        <input
+                            type="text"
+                            id="fullName"
+                            placeholder="Nguyễn Văn A"
+                            autocomplete="name"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="memberCode">Mã thành viên</label>
+
+                    <div class="input-box">
+                        <span>🎫</span>
+
+                        <input
+                            type="text"
+                            id="memberCode"
+                            placeholder="GYM001"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <button class="main-button" type="submit">
+                    <span>ĐĂNG NHẬP</span>
+                    <span class="button-arrow">→</span>
+                </button>
+
+            </form>
+
+            <div id="loginMessage" class="message"></div>
+
+            <div class="login-footer">
+                <span>IRON GYM</span>
+                <span>•</span>
+                <span>TRAIN HARDER</span>
+            </div>
+
+        </div>
+
+        <p class="copyright">
+            © 2026 IRON GYM. ALL RIGHTS RESERVED.
+        </p>
+
+    </main>
+
+    <script src="js/login.js"></script>
+
+</body>
+</html>

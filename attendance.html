@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>IRON GYM - Điểm danh</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+
+</head>
+
+
+<body>
+
+<div class="background-effects">
+
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+
+    <div class="grid-background"></div>
+
+</div>
+
+
+<aside class="sidebar">
+
+    <div class="sidebar-logo">
+
+        <div class="brand-icon">⚡</div>
+
+        <div>
+            <h1>IRON<span>GYM</span></h1>
+            <p>MEMBER SYSTEM</p>
+        </div>
+
+    </div>
+
+
+    <nav>
+
+        <a href="dashboard.html"
+           class="nav-item">
+
+            <span>⌂</span>
+            <span>Dashboard</span>
+
+        </a>
+
+
+        <a href="attendance.html"
+           class="nav-item active">
+
+            <span>📸</span>
+            <span>Điểm danh</span>
+
+        </a>
+
+
+        <a href="history.html"
+           class="nav-item">
+
+            <span>📅</span>
+            <span>Lịch sử</span>
+
+        </a>
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+        <div class="mini-profile">
+
+            <div class="avatar"
+                 id="sideAvatar">
+
+                A
+
+            </div>
+
+            <div>
+
+                <strong id="sideName">
+                    Member
+                </strong>
+
+                <small id="sideCode">
+                    GYM001
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <button id="logoutButton"
+                class="logout-button">
+
+            ↪ Đăng xuất
+
+        </button>
+
+    </div>
+
+</aside>
+
+
+<main class="main-content">
+
+    <header class="topbar">
+
+        <div>
+
+            <p class="top-label">
+                ATTENDANCE SYSTEM
+            </p>
+
+            <h2>Điểm danh</h2>
+
+        </div>
+
+    </header>
+
+
+    <section class="attendance-layout">
+
+
+        <!-- Camera -->
+
+        <div class="camera-panel panel">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <span class="small-label">
+                        LIVE CAMERA
+                    </span>
+
+                    <h3>
+                        Xác nhận bạn đang ở gym
+                    </h3>
+
+                </div>
+
+                <div class="camera-status">
+
+                    <span></span>
+
+                    READY
+
+                </div>
+
+            </div>
+
+
+            <div class="camera-container">
+
+                <video id="camera"
+                       autoplay
+                       playsinline>
+                </video>
+
+
+                <canvas id="canvas"></canvas>
+
+
+                <!-- Camera overlay -->
+
+                <div class="camera-overlay">
+
+                    <div class="scan-line"></div>
+
+                    <div class="corner top-left"></div>
+                    <div class="corner top-right"></div>
+                    <div class="corner bottom-left"></div>
+                    <div class="corner bottom-right"></div>
+
+                    <div class="camera-message">
+
+                        <span>
+                            Hãy đưa khuôn mặt vào khung
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Preview -->
+
+                <img id="photoPreview"
+                     class="photo-preview">
+
+            </div>
+
+
+            <div class="camera-controls">
+
+                <button id="startCamera"
+                        class="secondary-button">
+
+                    📷 Bật camera
+
+                </button>
+
+
+                <button id="captureButton"
+                        class="capture-button"
+                        disabled>
+
+                    <span></span>
+
+                </button>
+
+
+                <button id="retakeButton"
+                        class="secondary-button"
+                        disabled>
+
+                    🔄 Chụp lại
+
+                </button>
+
+            </div>
+
+
+            <button id="checkinButton"
+                    class="main-button checkin-button"
+                    disabled>
+
+                <span>✅ XÁC NHẬN ĐIỂM DANH</span>
+
+                <span>→</span>
+
+            </button>
+
+
+            <div id="attendanceMessage"
+                 class="message">
+            </div>
+
+        </div>
+
+
+        <!-- Information -->
+
+        <div class="attendance-info">
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <span class="small-label">
+                            CHECK-IN
+                        </span>
+
+                        <h3>
+                            Thông tin buổi tập
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <div class="info-list">
+
+                    <div class="info-row">
+
+                        <span>👤 Thành viên</span>
+
+                        <strong id="memberName">
+                            Member
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span>🎫 Mã thành viên</span>
+
+                        <strong id="memberCode">
+                            GYM001
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span>📅 Ngày</span>
+
+                        <strong id="currentDate">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <span>🕐 Thời gian</span>
+
+                        <strong id="currentTime">
+                            --
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="panel tips-panel">
+
+                <span class="small-label">
+                    ATTENDANCE TIPS
+                </span>
+
+                <h3>
+                    Để ảnh hợp lệ
+                </h3>
+
+
+                <ul>
+
+                    <li>
+                        <span>✓</span>
+                        Đảm bảo đủ ánh sáng
+                    </li>
+
+                    <li>
+                        <span>✓</span>
+                        Chụp trực tiếp bằng camera
+                    </li>
+
+                    <li>
+                        <span>✓</span>
+                        Đảm bảo bạn đang ở phòng gym
+                    </li>
+
+                    <li>
+                        <span>✓</span>
+                        Chỉ điểm danh một lần mỗi ngày
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div class="quote-card">
+
+                <div class="quote-icon">
+                    "
+                </div>
+
+                <p>
+                    Discipline is choosing between
+                    what you want now and what you
+                    want most.
+                </p>
+
+                <span>
+                    — Abraham Lincoln
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script src="js/camera.js"></script>
+
+</body>
+
+</html>

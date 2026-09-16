@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>IRON GYM - Dashboard</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="background-effects">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+        <div class="grid-background"></div>
+    </div>
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+
+            <div class="brand-icon">⚡</div>
+
+            <div>
+                <h1>IRON<span>GYM</span></h1>
+                <p>MEMBER SYSTEM</p>
+            </div>
+
+        </div>
+
+        <nav>
+
+            <a href="dashboard.html" class="nav-item active">
+                <span>⌂</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="attendance.html" class="nav-item">
+                <span>📸</span>
+                <span>Điểm danh</span>
+            </a>
+
+            <a href="history.html" class="nav-item">
+                <span>📅</span>
+                <span>Lịch sử</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="mini-profile">
+
+                <div class="avatar" id="sideAvatar">
+                    A
+                </div>
+
+                <div>
+                    <strong id="sideName">Member</strong>
+                    <small id="sideCode">GYM001</small>
+                </div>
+
+            </div>
+
+            <button id="logoutButton" class="logout-button">
+                ↪ Đăng xuất
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- Main -->
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <p class="top-label">THỨ HAI, 15 THÁNG 9</p>
+
+                <h2>Dashboard</h2>
+            </div>
+
+            <div class="top-profile">
+
+                <div class="avatar" id="topAvatar">
+                    A
+                </div>
+
+                <div>
+                    <strong id="topName">Member</strong>
+                    <small>Member</small>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- Welcome -->
+
+        <section class="welcome-card">
+
+            <div class="welcome-content">
+
+                <span class="small-label">LET'S GET STRONGER</span>
+
+                <h1>
+                    Xin chào,
+                    <span id="welcomeName">Member</span>! 🔥
+                </h1>
+
+                <p>
+                    Mỗi buổi tập là một bước tiến gần hơn
+                    đến phiên bản tốt nhất của bạn.
+                </p>
+
+                <a href="attendance.html" class="main-button inline-button">
+                    <span>ĐIỂM DANH NGAY</span>
+                    <span>→</span>
+                </a>
+
+            </div>
+
+            <div class="welcome-decoration">
+
+                <div class="circle circle-1"></div>
+                <div class="circle circle-2"></div>
+
+                <div class="dumbbell">
+                    🏋️
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Stats -->
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">🔥</div>
+
+                <div>
+                    <span>TỔNG BUỔI TẬP</span>
+
+                    <strong id="totalAttendance">
+                        0
+                    </strong>
+
+                    <small>buổi</small>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">⚡</div>
+
+                <div>
+                    <span>STREAK</span>
+
+                    <strong id="streak">
+                        0
+                    </strong>
+
+                    <small>ngày</small>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">📅</div>
+
+                <div>
+                    <span>THÁNG NÀY</span>
+
+                    <strong id="monthAttendance">
+                        0
+                    </strong>
+
+                    <small>buổi</small>
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">🏆</div>
+
+                <div>
+                    <span>RANK</span>
+
+                    <strong>
+                        #01
+                    </strong>
+
+                    <small>member</small>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Bottom grid -->
+
+        <section class="dashboard-grid">
+
+
+            <!-- Today's status -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <span class="small-label">
+                            TODAY
+                        </span>
+
+                        <h3>Trạng thái hôm nay</h3>
+                    </div>
+
+                    <span id="todayStatusBadge"
+                          class="status-badge">
+                        CHƯA ĐIỂM DANH
+                    </span>
+
+                </div>
+
+
+                <div id="todayContent"
+                     class="today-content">
+
+                    <div class="empty-icon">
+                        🏋️
+                    </div>
+
+                    <h4>
+                        Bạn chưa điểm danh hôm nay
+                    </h4>
+
+                    <p>
+                        Hãy bắt đầu buổi tập và ghi lại
+                        thành tích của bạn.
+                    </p>
+
+                    <a href="attendance.html"
+                       class="secondary-button">
+                        📸 Điểm danh
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Recent -->
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <span class="small-label">
+                            RECENT
+                        </span>
+
+                        <h3>Hoạt động gần đây</h3>
+                    </div>
+
+                    <a href="history.html"
+                       class="view-all">
+                        Xem tất cả →
+                    </a>
+
+                </div>
+
+                <div id="recentList"
+                     class="recent-list">
+
+                    <div class="empty-state">
+                        Chưa có lịch sử điểm danh.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="js/app.js"></script>
+
+</body>
+</html>
