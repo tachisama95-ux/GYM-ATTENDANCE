@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>IRON GYM - Lịch tập</title>
+
+    <link rel="stylesheet"
+          href="css/style.css">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+
+</head>
+
+
+<body>
+
+<div class="background-effects">
+
+    <div class="glow glow-1"></div>
+
+    <div class="glow glow-2"></div>
+
+    <div class="grid-background"></div>
+
+</div>
+
+
+<aside class="sidebar">
+
+    <div class="sidebar-logo">
+
+        <div class="brand-icon">⚡</div>
+
+        <div>
+
+            <h1>
+                IRON<span>GYM</span>
+            </h1>
+
+            <p>
+                MEMBER SYSTEM
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <nav>
+
+        <a href="dashboard.html"
+           class="nav-item">
+
+            <span>⌂</span>
+
+            <span>
+                Dashboard
+            </span>
+
+        </a>
+
+
+        <a href="attendance.html"
+           class="nav-item">
+
+            <span>📸</span>
+
+            <span>
+                Điểm danh
+            </span>
+
+        </a>
+
+
+        <a href="schedule.html"
+           class="nav-item active">
+
+            <span>🗓️</span>
+
+            <span>
+                Lịch tập
+            </span>
+
+        </a>
+
+
+        <a href="history.html"
+           class="nav-item">
+
+            <span>📅</span>
+
+            <span>
+                Lịch sử
+            </span>
+
+        </a>
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+        <div class="mini-profile">
+
+            <div class="avatar"
+                 id="sideAvatar">
+                A
+            </div>
+
+            <div>
+
+                <strong id="sideName">
+                    Member
+                </strong>
+
+                <small id="sideCode">
+                    GYM001
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <button id="logoutButton"
+                class="logout-button">
+
+            ↪ Đăng xuất
+
+        </button>
+
+    </div>
+
+</aside>
+
+
+<main class="main-content">
+
+    <header class="topbar">
+
+        <div>
+
+            <p class="top-label"
+               id="weekLabel">
+                TUẦN NÀY
+            </p>
+
+            <h2>
+                Lịch tập của bạn
+            </h2>
+
+        </div>
+
+        <div class="top-profile">
+
+            <div class="avatar"
+                 id="topAvatar">
+                A
+            </div>
+
+            <div>
+
+                <strong id="topName">
+                    Member
+                </strong>
+
+                <small id="topCode">
+                    GYM001
+                </small>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- Summary -->
+
+    <section class="history-summary four">
+
+        <div class="summary-card">
+
+            <span>
+                BUỔI CÓ KẾ HOẠCH
+            </span>
+
+            <strong id="planCount">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <span>
+                ĐÃ TẬP TUẦN NÀY
+            </span>
+
+            <strong id="doneCount">
+                0 / 7
+            </strong>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <span>
+                ẢNH ĐÃ LƯU
+            </span>
+
+            <strong id="photoCount">
+                0
+            </strong>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <span>
+                TỔNG BUỔI ĐÃ TẬP
+            </span>
+
+            <strong id="sessionCount">
+                0
+            </strong>
+
+        </div>
+
+    </section>
+
+
+    <!-- Weekly plan -->
+
+    <section class="panel schedule-panel">
+
+        <div class="panel-header">
+
+            <div>
+
+                <span class="small-label">
+                    WEEKLY PLAN
+                </span>
+
+                <h3>
+                    Kế hoạch tuần
+                </h3>
+
+            </div>
+
+            <span class="autosave-note"
+                  id="autosaveNote">
+                ✓ Tự động lưu
+            </span>
+
+        </div>
+
+
+        <div class="week-progress">
+
+            <div class="week-progress-bar">
+                <div id="weekProgressBar"
+                     class="week-progress-fill"></div>
+            </div>
+
+            <span id="weekProgressText"
+                  class="week-progress-text">
+                0/7 buổi hoàn thành
+            </span>
+
+        </div>
+
+
+        <div id="weekGrid"
+             class="week-grid"></div>
+
+    </section>
+
+
+    <!-- Session photos -->
+
+    <section class="panel gallery-panel">
+
+        <div class="panel-header">
+
+            <div>
+
+                <span class="small-label">
+                    SESSION PHOTOS
+                </span>
+
+                <h3>
+                    Ảnh các buổi tập
+                </h3>
+
+            </div>
+
+            <button id="clearSessions"
+                    class="danger-button">
+
+                Xóa ảnh + lịch sử tập
+
+            </button>
+
+        </div>
+
+        <div id="sessionGallery"
+             class="session-gallery"></div>
+
+    </section>
+
+
+    <div id="scheduleMessage"
+         class="message"></div>
+
+</main>
+
+
+<!-- Session modal -->
+
+<div id="sessionModal"
+     class="modal-overlay">
+
+    <div class="modal-card">
+
+        <div class="panel-header">
+
+            <div>
+
+                <span class="small-label">
+                    TRAINING SESSION
+                </span>
+
+                <h3 id="sessionTitle">
+                    Buổi tập
+                </h3>
+
+            </div>
+
+        </div>
+
+        <p class="modal-hint">
+            Chụp bằng camera hoặc chọn ảnh có sẵn trong máy.
+            Ảnh được lưu vào bộ nhớ trình duyệt (IndexedDB)
+            nên vẫn còn sau khi tắt trình duyệt.
+        </p>
+
+        <div class="session-camera-container">
+
+            <video id="sessionCamera"
+                   autoplay
+                   playsinline></video>
+
+            <canvas id="sessionCanvas"></canvas>
+
+            <div class="session-camera-message">
+                <span>Bật camera để chụp ảnh buổi tập</span>
+            </div>
+
+        </div>
+
+        <div class="camera-controls">
+
+            <button id="startCamera"
+                    class="secondary-button">
+
+                📷 Bật camera
+
+            </button>
+
+            <button id="captureButton"
+                    class="capture-button"
+                    disabled>
+
+                <span></span>
+
+            </button>
+
+            <label class="file-button">
+
+                <span>🖼️ Chọn ảnh</span>
+
+                <input id="fileInput"
+                       type="file"
+                       accept="image/*"
+                       multiple
+                       hidden>
+
+            </label>
+
+        </div>
+
+        <div id="pendingGrid"
+             class="pending-grid"></div>
+
+        <div class="field">
+
+            <label for="sessionNote">
+                Cảm nhận buổi tập
+            </label>
+
+            <input id="sessionNote"
+                   class="text-input"
+                   type="text"
+                   maxlength="140"
+                   placeholder="Ví dụ: Hoàn thành 4/4 hiệp, nặng hơn tuần trước">
+
+        </div>
+
+        <div id="sessionMessage"
+             class="message"></div>
+
+        <div class="modal-actions">
+
+            <button id="saveSession"
+                    class="main-button inline-button">
+
+                <span>✅ HOÀN THÀNH BUỔI TẬP</span>
+
+                <span>→</span>
+
+            </button>
+
+            <button id="closeSession"
+                    class="secondary-button">
+
+                Hủy
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Lightbox -->
+
+<div id="lightbox"
+     class="modal-overlay lightbox">
+
+    <img id="lightboxImage"
+         alt="Ảnh buổi tập phóng to">
+
+</div>
+
+
+<script src="js/schedule.js"></script>
+
+</body>
+
+</html>
