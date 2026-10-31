@@ -12,6 +12,17 @@ const loginMessage =
 
 
 /* -----------------------------------------
+   Đã đăng nhập thì vào thẳng Dashboard
+----------------------------------------- */
+
+if (localStorage.getItem("gymCurrentUser")) {
+
+    window.location.replace("dashboard.html");
+
+}
+
+
+/* -----------------------------------------
    Submit login
 ----------------------------------------- */
 
@@ -110,8 +121,9 @@ loginForm.addEventListener(
                 setTimeout(
                     function () {
 
-                        window.location.href =
-                            "dashboard.html";
+                        window.location.replace(
+                            "dashboard.html"
+                        );
 
                     },
                     500

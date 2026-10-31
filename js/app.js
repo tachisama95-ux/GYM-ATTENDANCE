@@ -7,53 +7,82 @@
    Kiểm tra đăng nhập
 ----------------------------------------- */
 
+function readJSON(key, fallback) {
+
+    try {
+
+        const raw = localStorage.getItem(key);
+
+        return raw ? JSON.parse(raw) : fallback;
+
+    }
+
+    catch (error) {
+
+        return fallback;
+
+    }
+
+}
+
+
 const currentUser =
-    JSON.parse(localStorage.getItem("gymCurrentUser"));
+    readJSON("gymCurrentUser", null);
 
 
 if (!currentUser) {
 
-    window.location.href = "index.html";
+    window.location.replace("index.html");
 
 }
 
 
 /* -----------------------------------------
-   Lấy lịch sử điểm danh
+   Lấy lịch sử điểm danh (theo thành viên)
 ----------------------------------------- */
 
 function getAttendance() {
 
-    return JSON.parse(
-        localStorage.getItem("gymAttendance") || "[]"
+    const all = readJSON("gymAttendance", []);
+
+    if (!currentUser) return all;
+
+    return all.filter(
+        item => item.code === currentUser.code
     );
 
 }
 
 
 /* -----------------------------------------
-   Lưu lịch sử
+   Ngày theo giờ địa phương
 ----------------------------------------- */
 
-function saveAttendance(data) {
+function toLocalDate(date) {
 
-    localStorage.setItem(
-        "gymAttendance",
-        JSON.stringify(data)
-    );
+    return [
+        date.getFullYear(),
+        String(date.getMonth() + 1).padStart(2, "0"),
+        String(date.getDate()).padStart(2, "0")
+    ].join("-");
 
 }
 
-
-/* -----------------------------------------
-   Ngày hiện tại
------------------------------------------ */
 
 function getToday() {
 
-    const date = new Date();
+    return toLocalDate(new Date());
 
-    return date.toISOString().split("T")[0];
+}
+
+
+function countThisMonth(attendance) {
+
+    const prefix = getToday().slice(0, 7);
+
+    return attendance.filter(
+        item => (item.date || "").slice(0, 7) === prefix
+    ).length;
 
 }
 
@@ -102,6 +131,9 @@ function loadUserInfo() {
         topName:
             document.getElementById("topName"),
 
+        topCode:
+            document.getElementById("topCode"),
+
         topAvatar:
             document.getElementById("topAvatar"),
 
@@ -132,6 +164,10 @@ function loadUserInfo() {
         elements.topName.textContent = name;
 
 
+    if (elements.topCode)
+        elements.topCode.textContent = code;
+
+
     if (elements.topAvatar)
         elements.topAvatar.textContent =
             getInitial(name);
@@ -157,6 +193,30 @@ function loadUserInfo() {
 
 
 /* -----------------------------------------
+   Nhãn ngày trên topbar
+----------------------------------------- */
+
+function loadTodayLabel() {
+
+    const label =
+        document.getElementById("topDate");
+
+    if (!label) return;
+
+    label.textContent =
+        new Date().toLocaleDateString(
+            "vi-VN",
+            {
+                weekday: "long",
+                day: "numeric",
+                month: "long"
+            }
+        ).toUpperCase();
+
+}
+
+
+/* -----------------------------------------
    Đăng xuất
 ----------------------------------------- */
 
@@ -174,8 +234,9 @@ if (logoutButton) {
                 "gymCurrentUser"
             );
 
-            window.location.href =
-                "index.html";
+            window.location.replace(
+                "index.html"
+            );
 
         }
     );
@@ -213,32 +274,10 @@ function loadDashboard() {
     }
 
 
-    const currentMonth =
-        new Date().getMonth();
-
-
-    const currentYear =
-        new Date().getFullYear();
-
-
-    const monthData =
-        attendance.filter(item => {
-
-            const date =
-                new Date(item.timestamp);
-
-            return (
-                date.getMonth() === currentMonth &&
-                date.getFullYear() === currentYear
-            );
-
-        });
-
-
     if (month) {
 
         month.textContent =
-            monthData.length;
+            countThisMonth(attendance);
 
     }
 
@@ -297,8 +336,7 @@ function calculateStreak() {
     while (true) {
 
         const date =
-            checkDate.toISOString()
-                .split("T")[0];
+            toLocalDate(checkDate);
 
 
         if (dates.includes(date)) {
@@ -478,8 +516,12 @@ function loadRecent() {
 
 function formatDate(dateString) {
 
+    const parts =
+        String(dateString).split("-").map(Number);
+
+
     const date =
-        new Date(dateString);
+        new Date(parts[0], parts[1] - 1, parts[2]);
 
 
     return date.toLocaleDateString(
@@ -536,31 +578,9 @@ function loadHistory() {
             attendance.length;
 
 
-    const currentMonth =
-        new Date().getMonth();
-
-
-    const currentYear =
-        new Date().getFullYear();
-
-
-    const monthCount =
-        attendance.filter(item => {
-
-            const date =
-                new Date(item.timestamp);
-
-            return (
-                date.getMonth() === currentMonth &&
-                date.getFullYear() === currentYear
-            );
-
-        }).length;
-
-
     if (month)
         month.textContent =
-            monthCount;
+            countThisMonth(attendance);
 
 
     if (last && attendance.length > 0) {
@@ -666,9 +686,12 @@ if (clearHistory) {
         "click",
         function () {
 
+            if (!currentUser) return;
+
+
             const confirmDelete =
                 confirm(
-                    "Bạn có chắc muốn xóa toàn bộ lịch sử?"
+                    "Bạn có chắc muốn xóa toàn bộ lịch sử điểm danh của mình?"
                 );
 
 
@@ -676,8 +699,15 @@ if (clearHistory) {
                 return;
 
 
-            localStorage.removeItem(
-                "gymAttendance"
+            const others =
+                readJSON("gymAttendance", []).filter(
+                    item => item.code !== currentUser.code
+                );
+
+
+            localStorage.setItem(
+                "gymAttendance",
+                JSON.stringify(others)
             );
 
 
@@ -694,6 +724,8 @@ if (clearHistory) {
 ----------------------------------------- */
 
 loadUserInfo();
+
+loadTodayLabel();
 
 loadDashboard();
 

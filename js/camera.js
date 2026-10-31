@@ -7,18 +7,47 @@
    User
 ----------------------------------------- */
 
+function readJSON(key, fallback) {
+
+    try {
+
+        const raw = localStorage.getItem(key);
+
+        return raw ? JSON.parse(raw) : fallback;
+
+    }
+
+    catch (error) {
+
+        return fallback;
+
+    }
+
+}
+
+
 const currentUser =
-    JSON.parse(
-        localStorage.getItem(
-            "gymCurrentUser"
-        )
-    );
+    readJSON("gymCurrentUser", null);
 
 
 if (!currentUser) {
 
-    window.location.href =
-        "index.html";
+    window.location.replace("index.html");
+
+}
+
+
+/* -----------------------------------------
+   Ngày theo giờ địa phương
+----------------------------------------- */
+
+function toLocalDate(date) {
+
+    return [
+        date.getFullYear(),
+        String(date.getMonth() + 1).padStart(2, "0"),
+        String(date.getDate()).padStart(2, "0")
+    ].join("-");
 
 }
 
@@ -80,40 +109,46 @@ let stream = null;
 let photoData = null;
 
 
+/* Ảnh nhỏ vừa đủ để xem lại, tránh đầy localStorage */
+
+const MAX_PHOTO_WIDTH =
+    640;
+
+
 /* -----------------------------------------
    User info
 ----------------------------------------- */
 
-document.getElementById(
-    "memberName"
-).textContent =
-    currentUser.name;
+function setText(id, value) {
+
+    const element =
+        document.getElementById(id);
+
+    if (element)
+        element.textContent = value;
+
+}
 
 
-document.getElementById(
-    "memberCode"
-).textContent =
-    currentUser.code;
+if (currentUser) {
 
+    const initial =
+        (currentUser.name || "A")
+            .trim()
+            .charAt(0)
+            .toUpperCase();
 
-document.getElementById(
-    "sideName"
-).textContent =
-    currentUser.name;
+    setText("memberName", currentUser.name);
 
+    setText("memberCode", currentUser.code);
 
-document.getElementById(
-    "sideCode"
-).textContent =
-    currentUser.code;
+    setText("sideName", currentUser.name);
 
+    setText("sideCode", currentUser.code);
 
-document.getElementById(
-    "sideAvatar"
-).textContent =
-    currentUser.name
-        .charAt(0)
-        .toUpperCase();
+    setText("sideAvatar", initial);
+
+}
 
 
 /* -----------------------------------------
@@ -165,28 +200,37 @@ setInterval(
 
 
 /* -----------------------------------------
+   Cảnh báo nếu hôm nay đã điểm danh
+----------------------------------------- */
+
+if (alreadyCheckedIn()) {
+
+    showMessage(
+        "Bạn đã điểm danh hôm nay. Hẹn bạn ở buổi tập tới! 💪",
+        "success"
+    );
+
+}
+
+
+/* -----------------------------------------
    Check today's attendance
 ----------------------------------------- */
 
 function alreadyCheckedIn() {
 
-    const data =
-        JSON.parse(
-            localStorage.getItem(
-                "gymAttendance"
-            ) || "[]"
-        );
+    if (!currentUser) return false;
 
+    const data =
+        readJSON("gymAttendance", []);
 
     const today =
-        new Date()
-            .toISOString()
-            .split("T")[0];
-
+        toLocalDate(new Date());
 
     return data.some(
         item =>
-            item.date === today
+            item.date === today &&
+            item.code === currentUser.code
     );
 
 }
@@ -226,8 +270,17 @@ startButton.addEventListener(
                     });
 
 
+            video.muted =
+                true;
+
+
             video.srcObject =
                 stream;
+
+
+            video
+                .play()
+                .catch(() => {});
 
 
             captureButton.disabled =
@@ -277,20 +330,39 @@ captureButton.addEventListener(
             return;
 
 
-        const width =
+        const sourceWidth =
             video.videoWidth;
 
 
-        const height =
+        const sourceHeight =
             video.videoHeight;
 
 
+        if (!sourceWidth || !sourceHeight) {
+
+            showMessage(
+                "Camera chưa sẵn sàng, hãy chờ vài giây rồi chụp lại.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        const scale =
+            Math.min(
+                1,
+                MAX_PHOTO_WIDTH / sourceWidth
+            );
+
+
         canvas.width =
-            width;
+            Math.round(sourceWidth * scale);
 
 
         canvas.height =
-            height;
+            Math.round(sourceHeight * scale);
 
 
         const context =
@@ -303,15 +375,15 @@ captureButton.addEventListener(
             video,
             0,
             0,
-            width,
-            height
+            canvas.width,
+            canvas.height
         );
 
 
         photoData =
             canvas.toDataURL(
                 "image/jpeg",
-                0.75
+                0.7
             );
 
 
@@ -389,12 +461,66 @@ retakeButton.addEventListener(
 
 
 /* -----------------------------------------
+   Lưu buổi tập
+----------------------------------------- */
+
+function saveRecord(record) {
+
+    const attendance =
+        readJSON("gymAttendance", []);
+
+    attendance.unshift(record);
+
+    try {
+
+        localStorage.setItem(
+            "gymAttendance",
+            JSON.stringify(attendance)
+        );
+
+        return true;
+
+    }
+
+    catch (error) {
+
+        /* Bộ nhớ đầy: vẫn giữ được buổi tập, bỏ ảnh */
+
+        attendance[0].image = "";
+
+        try {
+
+            localStorage.setItem(
+                "gymAttendance",
+                JSON.stringify(attendance)
+            );
+
+            return true;
+
+        }
+
+        catch (retryError) {
+
+            return false;
+
+        }
+
+    }
+
+}
+
+
+/* -----------------------------------------
    Check in
 ----------------------------------------- */
 
 checkinButton.addEventListener(
     "click",
     function () {
+
+        if (!currentUser)
+            return;
+
 
         if (!photoData) {
 
@@ -437,14 +563,6 @@ checkinButton.addEventListener(
                     new Date();
 
 
-                const attendance =
-                    JSON.parse(
-                        localStorage.getItem(
-                            "gymAttendance"
-                        ) || "[]"
-                    );
-
-
                 const record = {
 
                     id:
@@ -457,8 +575,7 @@ checkinButton.addEventListener(
                         currentUser.code,
 
                     date:
-                        now.toISOString()
-                            .split("T")[0],
+                        toLocalDate(now),
 
                     time:
                         now.toLocaleTimeString(
@@ -479,17 +596,24 @@ checkinButton.addEventListener(
                 };
 
 
-                attendance.unshift(
-                    record
-                );
+                if (!saveRecord(record)) {
 
+                    checkinButton.disabled =
+                        false;
 
-                localStorage.setItem(
-                    "gymAttendance",
-                    JSON.stringify(
-                        attendance
-                    )
-                );
+                    checkinButton.querySelector(
+                        "span:first-child"
+                    ).textContent =
+                        "✅ XÁC NHẬN ĐIỂM DANH";
+
+                    showMessage(
+                        "Không thể lưu buổi tập: bộ nhớ trình duyệt đã đầy. Hãy xóa lịch sử cũ rồi thử lại.",
+                        "error"
+                    );
+
+                    return;
+
+                }
 
 
                 checkinButton.querySelector(
@@ -583,8 +707,9 @@ document.getElementById(
         );
 
 
-        window.location.href =
-            "index.html";
+        window.location.replace(
+            "index.html"
+        );
 
     }
 );

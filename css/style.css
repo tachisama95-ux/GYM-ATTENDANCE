@@ -2218,169 +2218,6 @@ nav {
 }
 
 
-@media (max-width: 850px) {
-
-    .sidebar {
-
-        width: 70px;
-
-        padding: 20px 10px;
-
-    }
-
-
-    .sidebar-logo > div:last-child,
-    .nav-item span:last-child,
-    .mini-profile > div:last-child,
-    .logout-button {
-
-        display: none;
-
-    }
-
-
-    .sidebar-logo {
-
-        justify-content: center;
-
-    }
-
-
-    .nav-item {
-
-        justify-content: center;
-
-    }
-
-
-    .nav-item.active::before {
-
-        left: -10px;
-
-    }
-
-
-    .mini-profile {
-
-        justify-content: center;
-
-    }
-
-
-    .main-content {
-
-        margin-left: 70px;
-
-        padding: 25px;
-
-    }
-
-
-    .dashboard-grid,
-    .attendance-layout {
-
-        grid-template-columns: 1fr;
-
-    }
-
-}
-
-
-@media (max-width: 600px) {
-
-    .main-content {
-
-        padding: 20px 15px;
-
-    }
-
-
-    .topbar h2 {
-
-        font-size: 21px;
-
-    }
-
-
-    .top-profile {
-
-        display: none;
-
-    }
-
-
-    .stats-grid {
-
-        grid-template-columns: 1fr 1fr;
-
-    }
-
-
-    .stat-card {
-
-        padding: 15px;
-
-    }
-
-
-    .stat-icon {
-
-        display: none;
-
-    }
-
-
-    .welcome-card {
-
-        padding: 25px;
-
-    }
-
-
-    .welcome-decoration {
-
-        display: none;
-
-    }
-
-
-    .panel {
-
-        padding: 17px;
-
-    }
-
-
-    .history-summary {
-
-        grid-template-columns: 1fr;
-
-    }
-
-
-    .camera-controls {
-
-        flex-wrap: wrap;
-
-        justify-content: center;
-
-    }
-
-
-    .login-container {
-
-        padding: 15px;
-
-    }
-
-
-    .login-card {
-
-        padding: 25px;
-
-    }
-
-}
 /* =========================================================
    MOBILE RESPONSIVE - IRON GYM
    ========================================================= */
@@ -2462,7 +2299,22 @@ nav {
     }
 
     .sidebar-bottom {
+        display: flex;
+        align-items: center;
+        margin: 0 0 0 auto;
+        flex-shrink: 0;
+    }
+
+    .mini-profile {
         display: none;
+    }
+
+    .logout-button {
+        width: auto;
+        margin-top: 0;
+        padding: 8px 10px;
+        font-size: 11px;
+        white-space: nowrap;
     }
 
 
